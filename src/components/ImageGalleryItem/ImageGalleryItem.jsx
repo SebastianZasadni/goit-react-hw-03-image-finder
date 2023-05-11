@@ -1,5 +1,5 @@
 import css from '../../Index.module.css';
-export const ImageGalleryItem = imageGallerySrc => {
+export const ImageGalleryItem = (imageGallerySrc) => {
   return (
     <li className={css.imagegalleryitem}>
       <img

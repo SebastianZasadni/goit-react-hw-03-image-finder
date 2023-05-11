@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import css from '../../Index.module.css';
 export class Searchbar extends Component {
   makeGallery = evt => {
-    evt.preventDefault();
     const form = evt.currentTarget;
     const searchedImages = form.elements.query.value;
     localStorage.query = searchedImages;
