@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
+import {ImageGalleryItem} from 'components/ImageGalleryItem/ImageGalleryItem';
 import css from '../../Index.module.css';
 
 export class ImageGallery extends Component {
