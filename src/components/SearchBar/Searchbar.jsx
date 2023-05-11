@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import css from '.../Index.module.css';
+import css from '../../Index.module.css';
 export class Searchbar extends Component {
   makeGallery = evt => {
     evt.preventDefault();
