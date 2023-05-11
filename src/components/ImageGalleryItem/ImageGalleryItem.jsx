@@ -1,4 +1,4 @@
-import css from '../Index.module.css';
+import css from '.../Index.module.css';
 
 export const ImageGalleryItem = imageGallerySrc => {
   return (
