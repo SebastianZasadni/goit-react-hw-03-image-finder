@@ -1,5 +1,5 @@
-import {Searchbar} from './components/SearchBar/Searchbar';
-import {ImageGallery} from './components/ImageGallery/Imagegallery';
+import { Searchbar } from './components/SearchBar/Searchbar';
+import { ImageGallery } from './components/ImageGallery/Imagegallery';
 
 export const App = () => (
   <>
