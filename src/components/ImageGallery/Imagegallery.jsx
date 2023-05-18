@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
-import { Audio } from 'react-loader-spinner';
+import { Watch } from 'react-loader-spinner';
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import { Button } from 'components/Button/Button';
 import { Modal } from 'components/Modal/Modal';
@@ -81,7 +81,7 @@ export class ImageGallery extends Component {
   render() {
     const { isLoading, error, images, isModal, largeImg } = this.state;
     return isLoading ? (
-      <Audio />
+      <Watch />
     ) : error ? (
       <p>Whoops, something went wrong: {error.message}</p>
     ) : isModal ? (
