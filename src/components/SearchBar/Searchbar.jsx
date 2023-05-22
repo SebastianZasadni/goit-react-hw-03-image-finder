@@ -1,9 +1,9 @@
 import React from 'react';
+
 import css from '../../Index.module.css';
 
 export const Searchbar = () => {
-
-    const handleSubmit = evt => {
+  const handleSubmit = evt => {
     const form = evt.currentTarget;
     const searchedImages = form.elements.query.value;
     localStorage.query = searchedImages;

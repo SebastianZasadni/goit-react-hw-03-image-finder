@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
 import { Watch } from 'react-loader-spinner';
+import PropTypes from 'prop-types';
+
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import { Button } from 'components/Button/Button';
 import { Modal } from 'components/Modal/Modal';
@@ -8,19 +10,33 @@ import css from '../../Index.module.css';
 import { fetchImagesByQuery } from 'components/Api/Api';
 
 export class ImageGallery extends Component {
-  state = {
+  static defaultProps = {
     images: [],
+    query: null,
     isLoading: false,
     error: null,
     page: null,
     isModal: false,
     largeImg: null,
+    tags: null
   };
 
-  openModal = url => {
+  state = {
+    images: this.props.images,
+    query: this.props.query,
+    isLoading: this.props.isLoading,
+    error: this.props.error,
+    page: this.props.page,
+    isModal: this.props.isModal,
+    largeImg: this.props.largeImg,
+    tags: this.props.tags
+  };
+
+  openModal = (url, tags) => {
     this.setState({
       isModal: true,
       largeImg: url,
+      tags: tags
     });
   };
 
@@ -37,12 +53,12 @@ export class ImageGallery extends Component {
       page: prevState.page + 1,
     }));
 
-    const { page } = this.state;
+    const { query, page } = this.state;
 
     try {
-      const images = await fetchImagesByQuery(localStorage.query, page);
+      const newData = await fetchImagesByQuery(query, page);
       this.setState(prevState => ({
-        images: [...prevState.images, ...images],
+        images: [...prevState.images, ...newData],
       }));
     } catch (error) {
       this.setState({ error });
@@ -55,15 +71,18 @@ export class ImageGallery extends Component {
     this.setState({
       isLoading: true,
       page: 2,
+      query: localStorage.query,
     });
 
     const { page } = this.state;
 
     try {
-      const images = await fetchImagesByQuery(localStorage.query, page);
-      images.length
+      const newData = await fetchImagesByQuery(localStorage.query, page);
+      console.log(newData)
+      localStorage.clear();
+      newData.length
         ? this.setState({
-            images: [...images],
+            images: [...newData],
           })
         : this.setState({
             error: {
@@ -78,13 +97,18 @@ export class ImageGallery extends Component {
   }
 
   render() {
-    const { isLoading, error, images, isModal, largeImg } = this.state;
+    const { isLoading, error, images, isModal, largeImg, tags } = this.state;
     return isLoading ? (
       <Watch />
     ) : error ? (
       <p>Whoops, something went wrong: {error.message}</p>
     ) : isModal ? (
-      <Modal largeImageUrl={largeImg} onPress={() => this.closeModal()} />
+      <Modal
+        largeImageUrl={largeImg}
+        onPress={() => this.closeModal()}
+        onKeyDown={this.closeModal}
+        tags={tags}
+      />
     ) : (
       <div className={css.mainsection}>
         <ul className={css.imagegallery}>
@@ -92,7 +116,8 @@ export class ImageGallery extends Component {
             <ImageGalleryItem
               key={nanoid()}
               smallImageUrl={i.previewURL}
-              onPress={() => this.openModal(i.largeImageURL)}
+              onPress={() => this.openModal(i.largeImageURL, i.tags)}
+              tags={i.tags}
             />
           ))}
         </ul>
@@ -101,3 +126,18 @@ export class ImageGallery extends Component {
     );
   }
 }
+
+ImageGallery.propTypes = {
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      previewURL: PropTypes.string,
+      largeImageURL: PropTypes.string,
+      id: PropTypes.string,
+    })
+  ),
+  isLoading: PropTypes.bool.isRequired,
+  error: PropTypes.string,
+  page: PropTypes.number,
+  isModal: PropTypes.bool.isRequired,
+  largeImg: PropTypes.string,
+};

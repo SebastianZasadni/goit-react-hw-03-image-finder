@@ -6,3 +6,4 @@ export const fetchImagesByQuery = async (searchQuery, page) => {
   );
   return response.data.hits;
 };
+
