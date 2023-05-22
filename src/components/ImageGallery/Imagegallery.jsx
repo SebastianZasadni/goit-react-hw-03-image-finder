@@ -18,7 +18,7 @@ export class ImageGallery extends Component {
     page: null,
     isModal: false,
     largeImg: null,
-    tags: null
+    tags: null,
   };
 
   state = {
@@ -29,14 +29,14 @@ export class ImageGallery extends Component {
     page: this.props.page,
     isModal: this.props.isModal,
     largeImg: this.props.largeImg,
-    tags: this.props.tags
+    tags: this.props.tags,
   };
 
   openModal = (url, tags) => {
     this.setState({
       isModal: true,
       largeImg: url,
-      tags: tags
+      tags: tags,
     });
   };
 
@@ -78,7 +78,6 @@ export class ImageGallery extends Component {
 
     try {
       const newData = await fetchImagesByQuery(localStorage.query, page);
-      console.log(newData)
       localStorage.clear();
       newData.length
         ? this.setState({
