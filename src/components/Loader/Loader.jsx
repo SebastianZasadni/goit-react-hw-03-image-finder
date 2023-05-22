@@ -1,4 +1,5 @@
 import { Audio } from 'react-loader-spinner';
+
 <Audio
   height="80"
   width="80"

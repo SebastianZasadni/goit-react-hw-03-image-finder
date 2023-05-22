@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import css from '../../Index.module.css';
 
-export const ImageGalleryItem = ({smallImageUrl, onPress, tags}) => {
+export const ImageGalleryItem = ({ smallImageUrl, onPress, tags }) => {
   return (
     <li className={css.imagegalleryitem} onClick={onPress}>
       <img
@@ -18,6 +18,5 @@ export const ImageGalleryItem = ({smallImageUrl, onPress, tags}) => {
 ImageGalleryItem.propTypes = {
   smallImageUrl: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
-}
-
-
+  tags: PropTypes.string.isRequired,
+};

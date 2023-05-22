@@ -68,11 +68,13 @@ export class ImageGallery extends Component {
   };
 
   async componentDidMount() {
-    this.setState({
-      isLoading: true,
-      page: 2,
-      query: localStorage.query,
-    });
+    localStorage.query
+      ? this.setState({
+          isLoading: true,
+          page: 2,
+          query: localStorage.query,
+        })
+      : (localStorage.query = null);
 
     const { page } = this.state;
 
@@ -105,7 +107,7 @@ export class ImageGallery extends Component {
       <Modal
         largeImageUrl={largeImg}
         onPress={() => this.closeModal()}
-        onKeyDown={this.closeModal}
+        onEscDown={this.closeModal}
         tags={tags}
       />
     ) : (

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 export const fetchImagesByQuery = async (searchQuery, page) => {
   const response = await axios.get(
