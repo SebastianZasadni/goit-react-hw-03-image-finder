@@ -1,13 +1,14 @@
-import { Audio } from 'react-loader-spinner';
+import { Watch } from 'react-loader-spinner';
 
-<Audio
+<Watch
   height="80"
   width="80"
   radius="9"
   color="green"
+  left="250"
   ariaLabel="loading"
   wrapperStyle
   wrapperClass
 />
 
-export default Audio;
+export default Watch;

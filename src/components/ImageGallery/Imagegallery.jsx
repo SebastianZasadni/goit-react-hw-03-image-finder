@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
+import Notiflix from 'notiflix';
 import { Watch } from 'react-loader-spinner';
 import PropTypes from 'prop-types';
 
@@ -7,7 +8,7 @@ import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import { Button } from 'components/Button/Button';
 import { Modal } from 'components/Modal/Modal';
 import css from '../../Index.module.css';
-import { fetchImagesByQuery } from 'components/Api/Api';
+import { fetchImages } from 'components/Api/Api';
 
 export class ImageGallery extends Component {
   static defaultProps = {
@@ -56,7 +57,7 @@ export class ImageGallery extends Component {
     const { query, page } = this.state;
 
     try {
-      const newData = await fetchImagesByQuery(query, page);
+      const newData = await fetchImages(query, page);
       this.setState(prevState => ({
         images: [...prevState.images, ...newData],
       }));
@@ -79,7 +80,7 @@ export class ImageGallery extends Component {
     const { page } = this.state;
 
     try {
-      const newData = await fetchImagesByQuery(localStorage.query, page);
+      const newData = await fetchImages(localStorage.query, page);
       localStorage.clear();
       newData.length
         ? this.setState({
@@ -91,7 +92,7 @@ export class ImageGallery extends Component {
             },
           });
     } catch (error) {
-      this.setState({ error });
+      this.setState({ error: error });
     } finally {
       this.setState({ isLoading: false });
     }
@@ -102,7 +103,7 @@ export class ImageGallery extends Component {
     return isLoading ? (
       <Watch />
     ) : error ? (
-      <p>Whoops, something went wrong: {error.message}</p>
+      Notiflix.Notify.failure(`Whoops, something went wrong: ${error.message}`)
     ) : isModal ? (
       <Modal
         largeImageUrl={largeImg}
