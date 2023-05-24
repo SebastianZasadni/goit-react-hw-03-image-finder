@@ -5,11 +5,11 @@ import css from '../../Index.module.css';
 
 export const ImageGalleryItem = ({ smallImageUrl, onPress, tags }) => {
   return (
-    <li className={css.imagegalleryitem} onClick={onPress}>
+    <li className={css.imageGalleryItem} onClick={onPress}>
       <img
         src={smallImageUrl}
         alt={tags}
-        className={css.imagegalleryitemimage}
+        className={css.imageGalleryItemImage}
       ></img>
     </li>
   );

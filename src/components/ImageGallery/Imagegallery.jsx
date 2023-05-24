@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
 import Notiflix from 'notiflix';
-import { Watch } from 'react-loader-spinner';
 import PropTypes from 'prop-types';
 
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
+import { Loader } from 'components/Loader/Loader';
 import { Button } from 'components/Button/Button';
 import { Modal } from 'components/Modal/Modal';
 import css from '../../Index.module.css';
-import { fetchImages } from 'components/Api/Api';
+import { fetchImages } from 'api/api';
 
 export class ImageGallery extends Component {
   static defaultProps = {
@@ -32,6 +32,36 @@ export class ImageGallery extends Component {
     largeImg: this.props.largeImg,
     tags: this.props.tags,
   };
+
+  async componentDidMount() {
+    localStorage.query
+      ? this.setState({
+          isLoading: true,
+          page: 2,
+          query: localStorage.query,
+        })
+      : (localStorage.query = null);
+
+    const { page } = this.state;
+
+    try {
+      const newData = await fetchImages(localStorage.query, page);
+      localStorage.clear();
+      newData.length
+        ? this.setState({
+            images: [...newData],
+          })
+        : this.setState({
+            error: {
+              message: 'Images not found',
+            },
+          });
+    } catch (error) {
+      this.setState({ error: error });
+    } finally {
+      this.setState({ isLoading: false });
+    }
+  }
 
   openModal = (url, tags) => {
     this.setState({
@@ -68,52 +98,26 @@ export class ImageGallery extends Component {
     }
   };
 
-  async componentDidMount() {
-    localStorage.query
-      ? this.setState({
-          isLoading: true,
-          page: 2,
-          query: localStorage.query,
-        })
-      : (localStorage.query = null);
-
-    const { page } = this.state;
-
-    try {
-      const newData = await fetchImages(localStorage.query, page);
-      localStorage.clear();
-      newData.length
-        ? this.setState({
-            images: [...newData],
-          })
-        : this.setState({
-            error: {
-              message: 'Images not found',
-            },
-          });
-    } catch (error) {
-      this.setState({ error: error });
-    } finally {
-      this.setState({ isLoading: false });
-    }
-  }
-
   render() {
     const { isLoading, error, images, isModal, largeImg, tags } = this.state;
     return isLoading ? (
-      <Watch />
+      <Loader />
     ) : error ? (
       Notiflix.Notify.failure(`Whoops, something went wrong: ${error.message}`)
     ) : isModal ? (
       <Modal
         largeImageUrl={largeImg}
         onPress={() => this.closeModal()}
-        onEscDown={this.closeModal}
+        onEscDown={() => this.closeModal()}
         tags={tags}
       />
     ) : (
-      <div className={css.mainsection}>
-        <ul className={css.imagegallery}>
+      <div
+        className={css.mainSection}
+        tabIndex="0"
+        onKeyDown={e => console.log(e.key)}
+      >
+        <ul className={css.imageGallery}>
           {images.map(i => (
             <ImageGalleryItem
               key={nanoid()}

@@ -11,20 +11,20 @@ export const Searchbar = () => {
   };
 
   return (
-    <header className={css.searchbar}>
-      <form className={css.searchform} onSubmit={handleSubmit}>
-        <button type="submit" className={css.searchformbutton}>
-          <span className={css.searchformbuttonlabel}>Search</span>
+    <header className={css.searchBar}>
+      <form className={css.searchForm} onSubmit={handleSubmit}>
+        <button type="submit" className={css.searchFormButton}>
+          <span className={css.searchFormButtonLabel}>Search</span>
         </button>
         <input
           name="query"
           type="text"
-          className={css.searchforminput}
+          className={css.searchFormInput}
           autoComplete="off"
           autoFocus
           placeholder="Search image and photos"
           id="search-input"
-        ></input>
+        />
       </form>
     </header>
   );
