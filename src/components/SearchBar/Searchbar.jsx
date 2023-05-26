@@ -2,17 +2,10 @@ import React from 'react';
 
 import css from '../../Index.module.css';
 
-export const Searchbar = () => {
-  const handleSubmit = evt => {
-    const form = evt.currentTarget;
-    const searchedImages = form.elements.query.value;
-    localStorage.query = searchedImages;
-    form.reset();
-  };
-
+export const Searchbar = ({ onSubmit }) => {
   return (
     <header className={css.searchBar}>
-      <form className={css.searchForm} onSubmit={handleSubmit}>
+      <form className={css.searchForm} onSubmit={onSubmit}>
         <button type="submit" className={css.searchFormButton}>
           <span className={css.searchFormButtonLabel}>Search</span>
         </button>
@@ -24,7 +17,7 @@ export const Searchbar = () => {
           autoFocus
           placeholder="Search image and photos"
           id="search-input"
-        />
+        ></input>
       </form>
     </header>
   );

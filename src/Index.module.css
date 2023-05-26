@@ -179,9 +179,13 @@ img {
 .modal {
   max-width: calc(100vw - 48px);
   max-height: calc(100vh - 24px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .largeImage {
   position: absolute;
+  display: block;
 }
 .description {
   background-color: rgba(0, 0, 0, 0.5);
@@ -189,8 +193,7 @@ img {
   position: relative;
   opacity: 0.5;
   font-size: 40px;
-  text-align: center;
-  margin: 80px 450px;
+  top: -400px;
 }
 /*
 * Стили компонента Buton (Load more)
